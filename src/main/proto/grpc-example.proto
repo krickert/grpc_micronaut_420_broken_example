@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.broken.grpc";
+option java_outer_classname = "GrpcExample";
+option objc_class_prefix = "HLW";
+
+package com.broken.grpc;
+
+service GrpcExampleService {
+  rpc send (GrpcExampleRequest) returns (GrpcExampleReply) {}
+}
+
+message GrpcExampleRequest {
+  string name = 1;
+}
+
+message GrpcExampleReply {
+  string message = 1;
+}
