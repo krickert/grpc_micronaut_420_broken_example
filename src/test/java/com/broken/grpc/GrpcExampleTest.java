@@ -2,8 +2,6 @@ package com.broken.grpc;
 
 import com.google.common.collect.Maps;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Value;
-import com.google.protobuf.util.JsonFormat;
 import io.grpc.stub.StreamObserver;
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -14,7 +12,6 @@ import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -47,13 +44,8 @@ class GrpcExampleTest {
     StreamObserver<GrpcExampleReply> streamObserver = new StreamObserver<>() {
         @Override
         public void onNext(GrpcExampleReply reply) {
-            try {
-                log.info("RESPONSE, returning embeddings: {}", JsonFormat.printer().print(
-                        reply));
-                finishedDocs.put("example" + counter.incrementAndGet(), reply);
-            } catch (InvalidProtocolBufferException e) {
-                throw new RuntimeException(e);
-            }
+            log.info("RESPONSE, returning embeddings: {}", reply.getMessage());
+            finishedDocs.put("example" + counter.incrementAndGet(), reply);
         }
 
         @Override
@@ -79,8 +71,7 @@ class GrpcExampleTest {
         GrpcExampleReply reply = endpoint.send(request);
         assertNotNull(reply);
         assertNotNull(reply.getMessage());
-        JsonFormat.printer().print(reply);
-
+        log.info(reply.getMessage());
     }
 
     @Test
