@@ -4,7 +4,7 @@ import io.grpc.stub.StreamObserver;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class GrepExampleServer extends GrpcExampleServiceGrpc.GrpcExampleServiceImplBase {
+public class GrpcExampleService extends GrpcExampleServiceGrpc.GrpcExampleServiceImplBase {
 
     @Override
     public void send(GrpcExampleRequest req, StreamObserver<GrpcExampleReply> responseObserver) {
